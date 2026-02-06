@@ -4,10 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Catalog() {
   const [products, setProducts] = useState([]);
-
+console.log("ejecucion funcion catalog")
   useEffect(() => {
     api.get("products/")
-      .then(res => setProducts(res.data))
+      .then(res =>{
+        console.log("respuesta API total:", res.data);
+        setProducts(res.data)} )
       .catch(err => console.error(err));
   }, []);
 
