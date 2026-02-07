@@ -1,15 +1,15 @@
-/* ===== HOME ===== */
+/* ===== HOME – ESTILOS GENERALES ===== */
 
 .home-wrapper {
   background-color: #ffffff;
 }
 
-/* ---------- HERO ---------- */
+/* ===== HERO ===== */
 
 .hero-modern {
   background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
   padding: 100px 20px;
-  color: white;
+  color: #ffffff;
   position: relative;
   overflow: hidden;
 }
@@ -50,17 +50,17 @@
 
 .btn-main {
   background: #ff6b6b;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 15px 35px;
   font-size: 1.1rem;
   font-weight: 700;
   border-radius: 50px;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-main:hover {
@@ -85,7 +85,7 @@
   position: absolute;
   top: 10%;
   right: 10%;
-  background: white;
+  background: #ffffff;
   color: #2c3e50;
   padding: 15px 20px;
   border-radius: 15px;
@@ -93,7 +93,7 @@
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   animation: float 3s ease-in-out infinite;
 }
 
@@ -102,21 +102,25 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
-/* ---------- TRUST BAR ---------- */
+/* ===== TRUST BAR ===== */
 
 .trust-bar {
   max-width: 1000px;
   margin: -40px auto 40px;
-  background: white;
+  background: #ffffff;
   display: flex;
   justify-content: space-around;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   position: relative;
   z-index: 5;
 }
@@ -134,7 +138,7 @@
   font-size: 1.5rem;
 }
 
-/* ---------- SECCIONES ---------- */
+/* ===== SECCIONES GENERALES ===== */
 
 .home-section {
   max-width: 1200px;
@@ -158,10 +162,10 @@
 }
 
 .section-header p {
-  color: #777;
+  color: #777777;
 }
 
-/* ---------- CATEGORÍAS ---------- */
+/* ===== CATEGORÍAS ===== */
 
 .category-grid-modern {
   display: grid;
@@ -178,14 +182,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
-  transition: 0.4s;
+  transition: all 0.4s ease;
 }
 
 .cat-card-new:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .cat-card-new h3 {
@@ -196,10 +200,10 @@
 .cat-link {
   font-size: 0.9rem;
   text-decoration: underline;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-/* ---------- PRODUCTOS DESTACADOS ---------- */
+/* ===== PRODUCTOS DESTACADOS ===== */
 
 .featured-simple-grid {
   display: grid;
@@ -211,19 +215,14 @@
 .simple-prod-card {
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   border: 1px solid #f0f0f0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.simple-prod-card.no-click {
-  cursor: default;
-}
-
-.simple-prod-card.no-click:hover {
+.simple-prod-card:hover {
   transform: translateY(-12px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
@@ -250,7 +249,7 @@
 
 .prod-category-tag {
   font-size: 0.75rem;
-  color: #bbb;
+  color: #bbbbbb;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -260,7 +259,7 @@
 
 .simple-prod-card h4 {
   font-size: 1.1rem;
-  color: #333;
+  color: #333333;
   margin: 0 0 12px 0;
   font-weight: 700;
   text-transform: uppercase;
@@ -275,7 +274,7 @@
   color: #ff6b6b;
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* ===== RESPONSIVE ===== */
 
 @media (max-width: 768px) {
   .hero-container {
@@ -285,10 +284,6 @@
 
   .hero-text-content h1 {
     font-size: 2.4rem;
-  }
-
-  .hero-actions {
-    justify-content: center;
   }
 
   .hero-image-box {
