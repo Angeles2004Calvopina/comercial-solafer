@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+/*import { useNavigate, Link } from "react-router-dom";*/
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import "../styles/Home.css";
 import { FaArrowRight, FaTruck, FaShieldAlt, FaStar } from "react-icons/fa";
@@ -15,7 +16,8 @@ import interiores from "../assets/images/interiores.png";
 import Promotions from "../components/Promotions";
 
 function Home() {
-  const [categories, setCategories] = useState([]);
+  //const [categories, setCategories] = useState([]); // pendiente activación backend
+  const [categories] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const navigate = useNavigate();
 
