@@ -1,0 +1,242 @@
+/* =========================
+   HEADER PRINCIPAL
+========================= */
+
+.main-header-solafer {
+  background: white;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  padding: 10px 0;
+}
+
+.header-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* LOGO */
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.emoji-icon {
+  font-size: 2rem;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+/* LINKS DESKTOP */
+.nav-links-desktop {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #636e72;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link:hover {
+  color: #ff6b6b;
+}
+
+/* BUSCADOR */
+.search-box-modern {
+  flex: 1;
+  max-width: 400px;
+  position: relative;
+}
+
+.search-box-modern input {
+  width: 100%;
+  padding: 10px 15px 10px 40px;
+  border-radius: 50px;
+  border: 1px solid #dfe6e9;
+  background: #f8f9fa;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b2bec3;
+}
+
+/* ACCIONES */
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background: #f1f2f6;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #2c3e50;
+  text-decoration: none;
+  position: relative;
+}
+
+.menu-toggle {
+  background: #2c3e50;
+  color: white;
+}
+
+/* BADGE CARRITO */
+.cart-badge-new {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #ff6b6b;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+/* =========================
+   MEGA MENU (CATEGORÍAS)
+========================= */
+
+.mega-menu {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  min-width: 250px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1200;
+}
+
+.menu-item-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.menu-item-title:hover {
+  background: #f8f9fa;
+  color: #ff6b6b;
+}
+
+.submenu {
+  margin-left: 15px;
+  border-left: 2px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.submenu-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #636e72;
+}
+
+.submenu-item:hover {
+  background: #fff5f5;
+  color: #ff6b6b;
+  border-radius: 6px;
+}
+
+/* =========================
+   MINI CARRITO
+========================= */
+
+.mini-cart-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 15px;
+  border: 1px solid #eee;
+  z-index: 1000;
+}
+
+/* =========================
+   RESPONSIVE – MOBILE DRAWER
+========================= */
+
+@media (max-width: 768px) {
+
+  /* ocultar links desktop */
+  .nav-links-desktop {
+    display: none;
+  }
+
+  /* ocultar iconos internos (home, info, etc) */
+  .nav-link svg {
+    display: none;
+  }
+
+  /* ocultar buscador */
+  .search-box-modern {
+    display: none;
+  }
+
+  /* drawer menu */
+  .mega-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 320px;
+    border-radius: 0;
+    padding-top: 80px;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  .menu-item-title {
+    font-size: 1rem;
+  }
+
+  /* solo iconos esenciales */
+  .action-btn:not(.menu-toggle):not(:first-child) {
+    display: none;
+  }
+}
