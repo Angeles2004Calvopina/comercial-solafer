@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'corsheaders',
     "backend.products",
     "backend.orders",
-    "backend.users",
     "backend.promotions",
 ]
 
