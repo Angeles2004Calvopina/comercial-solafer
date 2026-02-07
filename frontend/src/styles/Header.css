@@ -1,6 +1,4 @@
-/* =========================
-   HEADER PRINCIPAL
-========================= */
+/* ===== HEADER PRINCIPAL ===== */
 
 .main-header-solafer {
   background: white;
@@ -121,9 +119,7 @@
   border: 2px solid white;
 }
 
-/* =========================
-   MEGA MENU (CATEGORÍAS)
-========================= */
+/* ===== MEGA MENU (CATEGORÍAS) ===== */
 
 .mega-menu {
   position: absolute;
@@ -174,9 +170,7 @@
   border-radius: 6px;
 }
 
-/* =========================
-   MINI CARRITO
-========================= */
+/* ===== MINI CARRITO ===== */
 
 .mini-cart-dropdown {
   position: absolute;
@@ -191,9 +185,7 @@
   z-index: 1000;
 }
 
-/* =========================
-   RESPONSIVE – MOBILE DRAWER
-========================= */
+/* ===== RESPONSIVE – MOBILE DRAWER ===== */
 
 @media (max-width: 768px) {
 
@@ -238,5 +230,43 @@
   /* solo iconos esenciales */
   .action-btn:not(.menu-toggle):not(:first-child) {
     display: none;
+  }
+}
+
+/* ===== MOBILE NAV GENERAL ===== */
+
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #2c3e50;
+}
+
+/* menú vertical */
+.mobile-nav-menu {
+  display: none;
+  background: white;
+  border-top: 1px solid #eee;
+  padding: 10px 20px;
+  flex-direction: column;
+}
+
+.mobile-nav-menu a {
+  padding: 12px 0;
+  text-decoration: none;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* SOLO EN MOBILE */
+@media (max-width: 768px) {
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .mobile-nav-menu {
+    display: flex;
   }
 }
