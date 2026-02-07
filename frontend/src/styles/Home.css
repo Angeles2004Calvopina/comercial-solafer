@@ -1,6 +1,4 @@
-/* =========================
-   HOME
-========================= */
+/* ===== HOME ===== */
 
 .home-wrapper {
   background-color: #ffffff;
@@ -77,8 +75,10 @@
 }
 
 .hero-logo-img {
-  width: 260px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 260px;
+  max-height: 400px;
+  object-fit: contain;
 }
 
 .floating-card {
@@ -273,4 +273,35 @@
   font-size: 1.6rem;
   font-weight: 800;
   color: #ff6b6b;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-text-content h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-image-box {
+    margin-top: 30px;
+  }
+
+  .trust-bar {
+    flex-direction: column;
+    gap: 15px;
+    margin: -20px 20px 40px;
+  }
+
+  .cat-card-new {
+    height: 180px;
+  }
 }

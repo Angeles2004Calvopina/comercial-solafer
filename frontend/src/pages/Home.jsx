@@ -66,11 +66,6 @@ function Home() {
                 src={logo} 
                 alt="Comercial Solafer Logo" 
                 className="hero-logo-img"
-                /*style={{ 
-                  width: '100%', 
-                  maxHeight: '400px', 
-                  objectFit: 'contain',
-                }} */
              />
           </div>
         </div>
