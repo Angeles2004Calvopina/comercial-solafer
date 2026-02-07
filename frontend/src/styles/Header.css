@@ -6,60 +6,63 @@
   position: sticky;
   top: 0;
   z-index: 1100;
-  padding: 10px 0;
 }
 
 .header-container {
   max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 20px;
+  margin: auto;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
-/* LOGO */
+/* ===== LOGO ===== */
+
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
 }
 
-.emoji-icon {
-  font-size: 2rem;
+.logo-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 
 .logo-text {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #2c3e50;
 }
 
-/* LINKS DESKTOP */
+/* ===== LINKS ===== */
+
 .nav-links-desktop {
   display: flex;
-  gap: 25px;
+  gap: 28px;
 }
 
 .nav-link {
   text-decoration: none;
   color: #636e72;
   font-weight: 600;
-  font-size: 0.9rem;
   display: flex;
-  align-items: center;
   gap: 6px;
+  align-items: center;
 }
 
 .nav-link:hover {
   color: #ff6b6b;
 }
 
-/* BUSCADOR */
+/* ===== SEARCH ===== */
+
 .search-box-modern {
   flex: 1;
-  max-width: 400px;
+  max-width: 420px;
   position: relative;
 }
 
@@ -69,7 +72,6 @@
   border-radius: 50px;
   border: 1px solid #dfe6e9;
   background: #f8f9fa;
-  outline: none;
 }
 
 .search-icon {
@@ -77,196 +79,187 @@
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #b2bec3;
 }
 
-/* ACCIONES */
+/* ===== ACCIONES ===== */
+
 .header-actions {
   display: flex;
-  gap: 10px;
+  gap: 14px;
+  margin-left: auto;
 }
 
 .action-btn {
   background: #f1f2f6;
-  border: none;
   width: 42px;
   height: 42px;
   border-radius: 50%;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.action-btn svg {
   color: #2c3e50;
-  text-decoration: none;
-  position: relative;
+}
+
+.action-btn:hover svg {
+  color: #ff6b6b;
 }
 
 .menu-toggle {
   background: #2c3e50;
+}
+
+.menu-toggle svg {
   color: white;
 }
 
-/* BADGE CARRITO */
 .cart-badge-new {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: -4px;
+  right: -4px;
   background: #ff6b6b;
   color: white;
   font-size: 0.7rem;
   padding: 2px 6px;
   border-radius: 10px;
-  border: 2px solid white;
 }
 
-/* ===== MEGA MENU (CATEGORÍAS) ===== */
+/* ===== BOTÓN HAMBURGUESA ===== */
 
-.mega-menu {
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  background: white;
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  min-width: 250px;
-  max-height: 80vh;
-  overflow-y: auto;
-  z-index: 1200;
-}
-
-.menu-item-title {
-  display: flex;
-  justify-content: space-between;
+.mobile-nav-toggle {
+  background: #f1f2f6;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  display: none; 
   align-items: center;
-  padding: 10px;
+  justify-content: center;
   cursor: pointer;
-  border-radius: 8px;
-  font-weight: 700;
 }
 
-.menu-item-title:hover {
-  background: #f8f9fa;
+.mobile-nav-toggle svg {
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.mobile-nav-toggle:hover svg {
   color: #ff6b6b;
 }
 
-.submenu {
-  margin-left: 15px;
-  border-left: 2px solid #f0f0f0;
-  display: flex;
-  flex-direction: column;
-}
+/* ===== OVERLAY ===== */
 
-.submenu-item {
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #636e72;
-}
-
-.submenu-item:hover {
-  background: #fff5f5;
-  color: #ff6b6b;
-  border-radius: 6px;
-}
-
-/* ===== MINI CARRITO ===== */
-
-.mini-cart-dropdown {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 300px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  padding: 15px;
-  border: 1px solid #eee;
+.screen-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
   z-index: 1000;
 }
 
-/* ===== RESPONSIVE – MOBILE DRAWER ===== */
+/* ===== MEGA MENU ===== */
+
+.mega-menu {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: white;
+  width: 280px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1200;
+}
+
+/* ===== MINI CART ===== */
+
+.mini-cart-dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 300px;
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== MENÚ LATERAL MÓVIL ===== */
+
+.mobile-nav-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 260px;
+  height: calc(100vh - 70px);
+  background: white;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 1200;
+  animation: slideInLeft 0.25s ease;
+}
+
+.mobile-nav-menu a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.mobile-nav-menu a:hover {
+  background: #f1f2f6;
+  color: #ff6b6b;
+}
+
+/* ===== ANIMACIÓN ===== */
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1024px) {
+  .search-box-modern {
+    max-width: 260px;
+  }
+
+  .nav-links-desktop {
+    gap: 18px;
+  }
+
+  .account-btn {
+    display: none;
+  }
+}
+
+/* ===== MOBILE / TABLET ===== */
 
 @media (max-width: 768px) {
-
-  /* ocultar links desktop */
-  .nav-links-desktop {
-    display: none;
-  }
-
-  /* ocultar iconos internos (home, info, etc) */
-  .nav-link svg {
-    display: none;
-  }
-
-  /* ocultar buscador */
+  .nav-links-desktop,
   .search-box-modern {
     display: none;
   }
 
-  /* drawer menu */
-  .mega-menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 80%;
-    max-width: 320px;
-    border-radius: 0;
-    padding-top: 80px;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
-    animation: slideIn 0.3s ease;
-  }
-
-  @keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-  }
-
-  .menu-item-title {
-    font-size: 1rem;
-  }
-
-  /* solo iconos esenciales */
-  .action-btn:not(.menu-toggle):not(:first-child) {
+  .account-btn {
     display: none;
   }
-}
 
-/* ===== MOBILE NAV GENERAL ===== */
-
-.mobile-nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  cursor: pointer;
-  color: #2c3e50;
-}
-
-/* menú vertical */
-.mobile-nav-menu {
-  display: none;
-  background: white;
-  border-top: 1px solid #eee;
-  padding: 10px 20px;
-  flex-direction: column;
-}
-
-.mobile-nav-menu a {
-  padding: 12px 0;
-  text-decoration: none;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-/* SOLO EN MOBILE */
-@media (max-width: 768px) {
   .mobile-nav-toggle {
-    display: block;
-  }
-
-  .mobile-nav-menu {
     display: flex;
   }
 }
