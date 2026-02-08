@@ -1,0 +1,378 @@
+/* =========================
+   CATALOGO
+========================= */
+
+.catalog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fdfbfb;
+}
+
+.catalog-header {
+  margin-bottom: 25px;
+}
+
+.catalog-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: -0.5px;
+}
+
+/* =========================
+   FILTRO DE CATEGORÍAS
+========================= */
+
+.category-filter-bar {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 35px;
+  scrollbar-width: none;
+}
+
+.category-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-pill {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+.filter-pill:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.filter-pill.active {
+  background: #2c3e50;
+  color: white;
+  border-color: #2c3e50;
+}
+
+/* =========================
+   SUBCATEGORÍAS
+========================= */
+
+.subcategory-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f2f6;
+  padding: 12px 20px;
+  border-radius: 14px;
+  margin-bottom: 35px;
+  overflow-x: auto;
+}
+
+.subcategory-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #57606f;
+  white-space: nowrap;
+}
+
+.sub-pill {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.sub-pill:hover:not(.active) {
+  background: #e9ecef;
+}
+
+.sub-pill.active {
+  background: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+}
+
+/* =========================
+   GRID DE PRODUCTOS
+========================= */
+
+.products-grid-formal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 28px;
+}
+
+/* =========================
+   TARJETA DE PRODUCTO
+========================= */
+
+.product-card-formal {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card-formal:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   IMAGEN
+========================= */
+
+.product-img-wrapper {
+  aspect-ratio: 1 / 1;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.product-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image-box {
+  font-size: 3rem;
+  opacity: 0.35;
+}
+
+/* =========================
+   ETIQUETAS
+========================= */
+
+.promo-tag-mini {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ff6b6b;
+  color: white;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  z-index: 2;
+}
+
+.out-of-stock-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff4d4d;
+  color: white;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  z-index: 2;
+}
+
+/* =========================
+   INFO PRODUCTO
+========================= */
+
+.product-details {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-category-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.product-name-formal {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 14px;
+  line-height: 1.35;
+  min-height: 2.7rem;
+}
+
+.text-strikethrough {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* =========================
+   PRECIOS
+========================= */
+
+.price-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.price-main-formal {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #2c3e50;
+}
+
+.price-new-formal {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ff6b6b;
+}
+
+.price-old-formal {
+  font-size: 0.8rem;
+  color: #b2bec3;
+  text-decoration: line-through;
+}
+
+/* =========================
+   BOTÓN
+========================= */
+
+.add-to-cart-formal {
+  margin-top: auto;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.add-to-cart-formal:hover {
+  background: #ff6b6b;
+  transform: scale(1.02);
+}
+
+.btn-disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+/* =========================
+   SIN RESULTADOS
+========================= */
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 1rem;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast-cart {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #2c3e50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: toastIn 0.3s ease;
+  z-index: 2000;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .catalog-container {
+    padding: 30px 15px;
+  }
+
+  .catalog-title {
+    font-size: 1.6rem;
+  }
+
+  .products-grid-formal {
+    gap: 18px;
+  }
+}
+
+/* =========================
+   PAGINACIÓN
+========================= */
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 50px 0 20px;
+}
+
+.pagination-bar button {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-bar button:hover:not(:disabled) {
+  background: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+}
+
+.pagination-bar button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-bar span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2c3e50;
+}

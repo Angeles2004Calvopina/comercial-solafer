@@ -1,37 +1,234 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import api from "../services/api";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { CartContext } from "../context/CartContext";
+
+import "../styles/Catalog.css";
 
 function Catalog() {
+  const { slug } = useParams(); 
+  const location = useLocation();
+  const { addToCart } = useContext(CartContext);
+
   const [products, setProducts] = useState([]);
-console.log("ejecucion funcion catalog")
+  const [categories, setCategories] = useState([]);
+  const [promotions, setPromotions] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+
+  // 🔹 PAGINACIÓN (NUEVO)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get("search") || "";
+
+  // 🔹 FUNCIÓN DE CARGA PAGINADA (NUEVO)
+  const loadProducts = (page = 1) => {
+    api.get(`products/?page=${page}`).then(res => {
+      setProducts(res.data.results);
+      setTotalPages(Math.ceil(res.data.count / 24));
+      setCurrentPage(page);
+    });
+  };
+
   useEffect(() => {
-    api.get("products/")
-      .then(res =>{
-        console.log("respuesta API total:", res.data);
-        setProducts(res.data)} )
-      .catch(err => console.error(err));
+    api.get("products/categories/").then(res => setCategories(res.data));
+    api.get("promotions/active/").then(res => setPromotions(res.data));
+    loadProducts(1); // 🔹 antes era products/
   }, []);
 
+  useEffect(() => {
+    if (categories.length > 0) {
+      if (slug) {
+        const categoryFound = categories.find(c => c.slug === slug);
+        
+        if (categoryFound) {
+          setCurrentCategory(categoryFound);
+          setActiveSubcategory(null); 
+        } else {
+          let subFound = null;
+          let parentFound = null;
+
+          categories.forEach(cat => {
+            const sub = cat.subcategories?.find(s => s.slug === slug);
+            if (sub) {
+              subFound = sub;
+              parentFound = cat;
+            }
+          });
+
+          if (subFound) {
+            setCurrentCategory(parentFound);
+            setActiveSubcategory(subFound);
+          }
+        }
+      } else {
+        setCurrentCategory(null);
+        setActiveSubcategory(null);
+      }
+    }
+  }, [slug, categories]); 
+
+  const filteredProducts = products.filter(p => {
+    if (searchQuery) {
+      return p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+             p.category.name.toLowerCase().includes(searchQuery.toLowerCase());
+    }
+    if (activeSubcategory) {
+      return p.category.id === activeSubcategory.id;
+    }
+    if (currentCategory) {
+      const subIds = currentCategory.subcategories?.map(s => s.id) || [];
+      return p.category.id === currentCategory.id || subIds.includes(p.category.id);
+    }
+    return true; 
+  });
+
+  const getPromoData = (product) => {
+    const promo = promotions.find(p =>
+      p.products.some(pp => pp.id === product.id)
+    );
+    if (!promo) return null;
+    const basePrice = Number(product.price);
+    const discounted = basePrice * (100 - promo.discount_percentage) / 100;
+    return {
+      price: discounted.toFixed(2),
+      old: basePrice.toFixed(2),
+      final: discounted,
+      percentage: promo.discount_percentage
+    };
+  };
+
   return (
-    <div className="container mt-4">
-      <h2>Catálogo de productos</h2>
-      <div className="row">
-        {products.map(product => (
-          <div className="col-md-4 mb-3" key={product.id}>
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-                <p><strong>${product.price}</strong></p>
-                <button className="btn btn-primary">
-                  Agregar al carrito
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+    <div className="catalog-container">
+      <div className="catalog-header">
+        <h1 className="catalog-title">
+          {searchQuery ? `Resultados para "${searchQuery}"` : 
+           activeSubcategory ? activeSubcategory.name : 
+           currentCategory ? currentCategory.name : "Nuestro Catálogo"}
+        </h1>
       </div>
+
+      {!slug && !searchQuery && (
+        <div className="category-filter-bar">
+          <button 
+            className={`filter-pill ${!currentCategory ? 'active' : ''}`}
+            onClick={() => { setCurrentCategory(null); setActiveSubcategory(null); }}
+          > Todos </button>
+          {categories.map(cat => (
+            <button
+              key={cat.id}
+              className={`filter-pill ${currentCategory?.id === cat.id ? 'active' : ''}`}
+              onClick={() => { setCurrentCategory(cat); setActiveSubcategory(null); }}
+            > {cat.name} </button>
+          ))}
+        </div>
+      )}
+
+      {!searchQuery && currentCategory?.subcategories?.length > 0 && (
+        <div className="subcategory-nav">
+          <span className="subcategory-label">Filtrar en {currentCategory.name}:</span>
+          <button 
+            className={`sub-pill ${!activeSubcategory ? 'active' : ''}`}
+            onClick={() => setActiveSubcategory(null)}
+          > Ver Todo </button>
+          {currentCategory.subcategories.map(sub => (
+            <button
+              key={sub.id}
+              className={`sub-pill ${activeSubcategory?.id === sub.id ? 'active' : ''}`}
+              onClick={() => setActiveSubcategory(sub)}
+            > {sub.name} </button>
+          ))}
+        </div>
+      )}
+
+      <div className="products-grid-formal">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map(product => {
+            const promo = getPromoData(product);
+            const isOutOfStock = product.stock <= 0;
+
+            return (
+              <div 
+                key={product.id} 
+                className={`product-card-formal ${promo ? 'on-sale' : ''} ${isOutOfStock ? 'is-out-of-stock' : ''}`}
+              >
+                {isOutOfStock && <div className="out-of-stock-badge">Sin stock</div>}
+                {promo && !isOutOfStock && <div className="promo-tag-mini">-{promo.percentage}% OFF</div>}
+                
+                <div className="product-img-wrapper">
+                  {product.image ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      style={{ filter: isOutOfStock ? "grayscale(100%) opacity(0.6)" : "none" }} 
+                    />
+                  ) : (
+                    <div className="no-image-box">🏪</div>
+                  )}
+                </div>
+
+                <div className="product-details">
+                  <span className="product-category-tag">{product.category.name}</span>
+                  <h4 className={`product-name-formal ${isOutOfStock ? 'text-strikethrough' : ''}`}>
+                    {product.name}
+                  </h4>
+                  
+                  <div className="price-stack">
+                    {promo ? (
+                      <>
+                        <span className="price-old-formal">${promo.old}</span>
+                        <span className="price-new-formal">${promo.price}</span>
+                      </>
+                    ) : (
+                      <span className="price-main-formal">${product.price}</span>
+                    )}
+                  </div>
+
+                  <button 
+                    className={`add-to-cart-formal ${isOutOfStock ? 'btn-disabled' : ''}`} 
+                    disabled={isOutOfStock} 
+                    onClick={() => {
+                      if (isOutOfStock) return;
+                      const finalPrice = promo ? promo.final : Number(product.price);
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        unit_price: finalPrice,
+                        image: product.image,
+                        stock: product.stock
+                      });
+                      setShowToast(true);
+                      setTimeout(() => setShowToast(false), 2000);
+                    }}
+                  > 
+                    {isOutOfStock ? "Agotado" : "Añadir"} 
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="no-results">No hay productos disponibles en esta sección.</div>
+        )}
+      </div>
+
+      {/* 🔹 PAGINACIÓN VISUAL (NUEVO, NO AFECTA NADA) */}
+      {totalPages > 1 && (
+        <div className="pagination-bar">
+          <button disabled={currentPage === 1} onClick={() => loadProducts(currentPage - 1)}>
+            ◀
+          </button>
+          <span>{currentPage} / {totalPages}</span>
+          <button disabled={currentPage === totalPages} onClick={() => loadProducts(currentPage + 1)}>
+            ▶
+          </button>
+        </div>
+      )}
+
+      {showToast && <div className="toast-cart">🛒 ¡Añadido con éxito!</div>}
     </div>
   );
 }
