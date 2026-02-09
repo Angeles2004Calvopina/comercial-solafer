@@ -142,9 +142,9 @@ function Catalog() {
     };
   };
 
-  const handleSearch = (query) => {
+  /*const handleSearch = (query) => {
     setSearchParams({ search: query, page: 1 });
-  };
+  };*/
 
   return (
     <div className="catalog-container">
