@@ -150,7 +150,7 @@ function Checkout() {
   };
 
   const handleWhatsAppHelp = () => {
-    window.open("https://wa.me/593999999999?text=Hola! Necesito ayuda con mi compra.", "_blank");
+    window.open("https://wa.me/593958788729?text=Hola! Necesito ayuda con mi compra.", "_blank");
   };
 
   if (orderCompleted) {
