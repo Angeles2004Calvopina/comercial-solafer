@@ -4,7 +4,6 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import { CartContext } from "../context/CartContext";
-
 import "../styles/Catalog.css";
 
 function Catalog() {
@@ -221,7 +220,13 @@ function Catalog() {
                       style={{ filter: isOutOfStock ? "grayscale(100%) opacity(0.6)" : "none" }} 
                     />
                   ) : (
-                    <div className="no-image-box">🏪</div>
+                    <div className="no-image-box">
+                      <img
+                        src="/logo-local.png"
+                        alt="Solafer"
+                        className="no-image-logo"
+                      />
+                    </div>
                   )}
                 </div>
 

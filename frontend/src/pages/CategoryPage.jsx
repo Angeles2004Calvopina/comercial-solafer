@@ -6,6 +6,7 @@ import api from "../services/api";
 import { CartContext } from "../context/CartContext";
 import "../styles/CategoryPage.css"; 
 
+
 function CategoryPage() {
   const { categorySlug } = useParams();
   const navigate = useNavigate();
@@ -63,7 +64,13 @@ function CategoryPage() {
                 {product.image ? (
                   <img src={product.image} alt={product.name} />
                 ) : (
-                  <div className="no-image">🏪</div>
+                  <div className="no-image">
+                    <img
+                      src="/logo-local.png"
+                      alt="Solafer"
+                      className="no-image-logo"
+                    />
+                  </div>
                 )}
               </div>
 

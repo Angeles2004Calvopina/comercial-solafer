@@ -115,7 +115,13 @@ function Home() {
                     style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '15px' }} 
                   />
                 ) : (
-                  <div className="no-image-emoji">🏪</div>
+                  <div className="no-image-emoji">
+                    <img
+                      src={logo}
+                      alt="Comercial Solafer"
+                      className="no-image-logo"
+                    />
+                  </div>
                 )}
               </div>
               

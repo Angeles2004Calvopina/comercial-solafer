@@ -7,24 +7,17 @@ import {
   FaShoppingCart,
   FaUser,
   FaBars,
-  FaEllipsisV,
   FaHome,
   FaThLarge,
   FaInfoCircle,
-  FaSearch,
-  FaChevronDown,
-  FaChevronUp
+  FaSearch
 } from "react-icons/fa";
-import api from "../services/api";
 import Cart from "./Cart";
 import logo from "../assets/images/logo.png";
 
 import "../styles/Header.css";
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [openCategoryId, setOpenCategoryId] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const [search, setSearch] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -37,16 +30,8 @@ function Header() {
   const cartButtonRef = useRef(null);
   const mobileNavRef = useRef(null);
   const mobileNavButtonRef = useRef(null);
-  const megaMenuRef = useRef(null); 
 
   const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-
-  // Cargar categorías
-  useEffect(() => {
-    api.get("products/categories/")
-      .then(res => setCategories(res.data.results || []))
-      .catch(() => setCategories([]));
-  }, []);
 
   // LISTENER GLOBAL 
   useEffect(() => {
@@ -55,13 +40,11 @@ function Header() {
         cartRef.current?.contains(e.target) ||
         cartButtonRef.current?.contains(e.target) ||
         mobileNavRef.current?.contains(e.target) ||
-        mobileNavButtonRef.current?.contains(e.target) ||
-        megaMenuRef.current?.contains(e.target)
+        mobileNavButtonRef.current?.contains(e.target)
       ) {
         return;
       }
 
-      setMenuOpen(false);
       setShowCart(false);
       setMobileNavOpen(false);
     }
@@ -70,20 +53,9 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleGlobalClick);
   }, []);
 
-  const goToCategory = (slug) => {
-    setMenuOpen(false);
-    setMobileNavOpen(false);
-    setOpenCategoryId(null);
-    navigate(`/catalogo?category=${slug}`);
-  };
-
-  const toggleSubmenu = (id) => {
-    setOpenCategoryId(prev => (prev === id ? null : id));
-  };
-
   return (
     <>
-      {(menuOpen || showCart || mobileNavOpen) && <div className="screen-overlay" />}
+      {(showCart || mobileNavOpen) && <div className="screen-overlay" />}
 
       <header className="main-header-solafer">
         <div className="header-container">
@@ -94,7 +66,6 @@ function Header() {
             className="mobile-nav-toggle"
             onClick={() => {
               setMobileNavOpen(!mobileNavOpen);
-              setMenuOpen(false);
               setShowCart(false);
             }}
           >
@@ -152,7 +123,6 @@ function Header() {
                 className="action-btn"
                 onClick={() => {
                   setShowCart(!showCart);
-                  setMenuOpen(false);
                 }}
               >
                 <FaShoppingCart />
@@ -172,18 +142,6 @@ function Header() {
             <Link to="/cuenta" className="action-btn account-btn">
               <FaUser />
             </Link>
-
-            {/* MENÚ CATEGORÍAS */}
-            <button
-              className="action-btn menu-toggle"
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-                setShowCart(false);
-                setMobileNavOpen(false);
-              }}
-            >
-              <FaEllipsisV />
-            </button>
 
           </div>
         </div>
@@ -219,46 +177,6 @@ function Header() {
           <Link to="/catalogo" onClick={() => setMobileNavOpen(false)}><FaThLarge /> Catálogo</Link>
           <Link to="/nosotros" onClick={() => setMobileNavOpen(false)}><FaInfoCircle /> Nosotros</Link>
           <Link to="/cuenta" onClick={() => setMobileNavOpen(false)}><FaUser /> Cuenta</Link>
-        </div>
-      )}
-
-      {/* 🔥 MEGA MENÚ PROTEGIDO */}
-      {menuOpen && (
-        <div className="mega-menu" ref={megaMenuRef}>
-          {categories.map(category => {
-            const isOpen = openCategoryId === category.id;
-            const hasSubs = category.subcategories?.length > 0;
-
-            return (
-              <div className="menu-item" key={category.id}>
-                <div
-                  className="menu-item-title"
-                  onClick={() =>
-                    hasSubs
-                      ? toggleSubmenu(category.id)
-                      : goToCategory(category.slug)
-                  }
-                >
-                  <span>{category.name}</span>
-                  {hasSubs && (isOpen ? <FaChevronUp /> : <FaChevronDown />)}
-                </div>
-
-                {isOpen && hasSubs && (
-                  <div className="submenu">
-                    {category.subcategories.map(sub => (
-                      <div
-                        key={sub.id}
-                        className="submenu-item"
-                        onClick={() => goToCategory(sub.slug)}
-                      >
-                        {sub.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </div>
       )}
     </>

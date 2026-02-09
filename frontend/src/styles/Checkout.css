@@ -1,0 +1,227 @@
+/* ===============================
+   CHECKOUT GENERAL
+================================ */
+.checkout-page {
+  background: #f8f9fa; /* Un gris más suave */
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===============================
+   TARJETAS (PROFUNDIDAD)
+================================ */
+.checkout-card,
+.summary-sticky-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.03);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease;
+}
+
+.summary-sticky-card {
+  position: sticky;
+  top: 100px;
+  border: 2px solid #fff; /* Efecto borde elegante */
+}
+
+/* ===============================
+   INPUTS MODERNOS
+================================ */
+.custom-input {
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: #fcfcfc;
+}
+
+.custom-input:focus {
+  background-color: #fff;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 4px rgba(255,107,107,0.1);
+  outline: none;
+}
+
+.input-group-text {
+  border-radius: 12px 0 0 12px !important;
+  border: 1px solid #e2e8f0;
+  color: #ff6b6b;
+}
+
+/* ===============================
+   BOTONES
+================================ */
+.btn-back-shopping {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  color: #64748b;
+  transition: all 0.3s;
+}
+
+.btn-back-shopping:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+  transform: translateX(-5px);
+}
+
+.btn-whatsapp-minimal {
+  background: #25d366;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+  transition: all 0.3s;
+}
+
+.btn-whatsapp-minimal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn-confirm-final {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-confirm-final:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+}
+
+.btn-confirm-final:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* ===============================
+   DETALLES DE TEXTO
+================================ */
+.text-coral {
+  color: #ff6b6b;
+}
+
+.total-display {
+  background: #fff5f5;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.total-display h2 {
+  font-size: 2.5rem;
+  color: #2d3436;
+  margin: 0;
+}
+
+.form-check {
+  transition: all 0.2s;
+  border: 1px solid #f1f5f9 !important;
+}
+
+.form-check:hover {
+  background: #fff5f5 !important;
+  border-color: #ff6b6b !important;
+}
+
+/* Animación de entrada */
+.animate__fadeIn {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===============================
+   ESTILOS DE PAGO (PAYMENT.JSX)
+================================ */
+
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.method-btn {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #f1f5f9;
+  border-radius: 12px;
+  background: white;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: left;
+}
+
+.method-btn:hover {
+  border-color: #ff6b6b;
+  background: #fff5f5;
+}
+
+.method-btn .icon {
+  font-size: 24px;
+  margin-right: 15px;
+  color: #ff6b6b;
+}
+
+.method-btn span {
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Diseño del QR simulado */
+.qr-simulated {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 2px dashed #cbd5e1;
+  display: inline-block;
+}
+
+.qr-header {
+  font-weight: bold;
+  color: #003566;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+/* Alertas de estado */
+.payment-alert {
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.payment-alert.success {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.payment-alert.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.btn-back-link {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  text-decoration: underline;
+}

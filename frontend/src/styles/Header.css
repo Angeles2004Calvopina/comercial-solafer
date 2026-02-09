@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  position: relative;
 }
 
 /* ==============================
@@ -140,16 +141,8 @@
   color: #ff6b6b;
 }
 
-/* BOTÓN MENÚ DERECHA */
-.menu-toggle {
-  background: #2c3e50;
-}
-
-.menu-toggle svg {
-  color: white;
-}
-
 /* BADGE CARRITO */
+
 .cart-badge-new {
   position: absolute;
   top: -3px;
@@ -196,70 +189,6 @@
   inset: 0;
   background: rgba(0,0,0,0.08);
   z-index: 1000;
-}
-
-/* ==============================
-   MEGA MENU (CATEGORÍAS)
-============================== */
-
-.mega-menu {
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  background: white;
-  padding: 16px;
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.15);
-  z-index: 1200;
-  min-width: 260px;
-  max-height: 80vh;
-  overflow-y: auto;
-  border: 1px solid #eee;
-}
-
-.menu-item-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: 700;
-  color: #2c3e50;
-  transition: background 0.2s;
-}
-
-.menu-item-title:hover {
-  background: #f8f9fa;
-  color: #ff6b6b;
-}
-
-.submenu {
-  margin-left: 12px;
-  border-left: 2px solid #f0f0f0;
-  display: flex;
-  flex-direction: column;
-}
-
-.submenu-item {
-  padding: 8px 14px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #636e72;
-  transition: all 0.2s;
-}
-
-.submenu-item:hover {
-  background: #fff5f5;
-  color: #ff6b6b;
-  border-radius: 6px;
-}
-
-.header-container {
-  position: relative; 
 }
 
 /* ==============================
@@ -351,5 +280,17 @@
 
   .mobile-search-btn {
     display: flex;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-text {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-btn {
+    display: none;
   }
 }
