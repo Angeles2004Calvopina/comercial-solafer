@@ -1,6 +1,6 @@
 // frontend/src/components/Payment.jsx
 import { useState } from "react";
-import { FaSpinner, FaCheckCircle, FaTimesCircle, FaUniversity, FaCreditCard, FaQrcode, FaMoneyBillWave } from "react-icons/fa";
+import { FaSpinner, FaCheckCircle, FaUniversity, FaCreditCard, FaQrcode, FaMoneyBillWave } from "react-icons/fa";
 
 function Payment({ total, onApprove, onReject }) {
   const [method, setMethod] = useState(null);
