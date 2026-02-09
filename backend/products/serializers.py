@@ -1,33 +1,41 @@
-# backend/products/serializers.py
-
 from rest_framework import serializers
 from .models import Product, Subcategory, Category
 
-# 🔹 Subcategoría simple (para meterla dentro de Category)
-class SubcategorySimpleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subcategory
-        fields = ["id", "name", "slug"]
-
-# 🔹 Categoría CON sus subcategorías
-class CategorySerializer(serializers.ModelSerializer):
-    subcategories = SubcategorySimpleSerializer(many=True, read_only=True)
-
+# 🔹 Categoría simple
+class CategorySimpleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "name", "slug", "subcategories"]
+        fields = ["id", "name", "slug"]
 
-# 🔹 Subcategoría completa (para productos)
-class SubcategorySerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+# 🔹 Subcategoría simple (para productos)
+class SubcategorySimpleSerializer(serializers.ModelSerializer):
+    category = CategorySimpleSerializer()
 
     class Meta:
         model = Subcategory
         fields = ["id", "name", "slug", "category"]
 
-# 🔹 Producto
+# 🔹 Categoría CON subcategorías (solo para /categories/)
+class CategorySerializer(serializers.ModelSerializer):
+    subcategories = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ["id", "name", "slug", "subcategories"]
+
+    def get_subcategories(self, obj):
+        return [
+            {
+                "id": sub.id,
+                "name": sub.name,
+                "slug": sub.slug
+            }
+            for sub in obj.subcategories.all()
+        ]
+
+# 🔹 Producto (SIN recursión)
 class ProductSerializer(serializers.ModelSerializer):
-    subcategory = SubcategorySerializer()
+    subcategory = SubcategorySimpleSerializer()
 
     class Meta:
         model = Product
