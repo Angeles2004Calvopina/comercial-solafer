@@ -1,17 +1,19 @@
+// frontend/src/components/Header.jsx
+
 import { useContext, useEffect, useState, useRef } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    FaShoppingCart,
-    FaUser,
-    FaBars,
-    FaEllipsisV, 
-    FaHome,
-    FaThLarge,
-    FaInfoCircle,
-    FaSearch,
-    FaChevronDown,
-    FaChevronUp
+  FaShoppingCart,
+  FaUser,
+  FaBars,
+  FaEllipsisV,
+  FaHome,
+  FaThLarge,
+  FaInfoCircle,
+  FaSearch,
+  FaChevronDown,
+  FaChevronUp
 } from "react-icons/fa";
 import api from "../services/api";
 import Cart from "./Cart";
@@ -20,12 +22,13 @@ import logo from "../assets/images/logo.png";
 import "../styles/Header.css";
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false); // categorías
+  const [menuOpen, setMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [openCategoryId, setOpenCategoryId] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const [search, setSearch] = useState("");
-  const [mobileNavOpen, setMobileNavOpen] = useState(false); // navegación general
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -34,50 +37,44 @@ function Header() {
   const cartButtonRef = useRef(null);
   const mobileNavRef = useRef(null);
   const mobileNavButtonRef = useRef(null);
+  const megaMenuRef = useRef(null); 
 
-  // FUTURO: cuando el carrito tenga quantity real
-  // const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-    useEffect(() => {
-        api.get("products/categories/")
-        .then(res => setCategories(res.data))
-        // FUTURO: cuando el backend esté completo
-        // .catch(err => console.error("Error cargando categorías:", err));
-        .catch(() => {setCategories([]);
-        });
-    }, []);
+  // Cargar categorías
+  useEffect(() => {
+    api.get("products/categories/")
+      .then(res => setCategories(res.data.results || []))
+      .catch(() => setCategories([]));
+  }, []);
 
-   useEffect(() => {
+  // LISTENER GLOBAL 
+  useEffect(() => {
     function handleGlobalClick(e) {
       if (
-        menuOpen ||
-        showCart ||
-        mobileNavOpen
+        cartRef.current?.contains(e.target) ||
+        cartButtonRef.current?.contains(e.target) ||
+        mobileNavRef.current?.contains(e.target) ||
+        mobileNavButtonRef.current?.contains(e.target) ||
+        megaMenuRef.current?.contains(e.target)
       ) {
-        if (
-          cartRef.current?.contains(e.target) ||
-          cartButtonRef.current?.contains(e.target) ||
-          mobileNavRef.current?.contains(e.target) ||
-          mobileNavButtonRef.current?.contains(e.target)
-        ) {
-          return;
-        }
-
-        setMenuOpen(false);
-        setShowCart(false);
-        setMobileNavOpen(false);
+        return;
       }
+
+      setMenuOpen(false);
+      setShowCart(false);
+      setMobileNavOpen(false);
     }
 
     document.addEventListener("mousedown", handleGlobalClick);
     return () => document.removeEventListener("mousedown", handleGlobalClick);
-  }, [menuOpen, showCart, mobileNavOpen]);
+  }, []);
 
   const goToCategory = (slug) => {
     setMenuOpen(false);
+    setMobileNavOpen(false);
     setOpenCategoryId(null);
-    navigate(`/catalogo/${slug}`);
+    navigate(`/catalogo?category=${slug}`);
   };
 
   const toggleSubmenu = (id) => {
@@ -86,14 +83,12 @@ function Header() {
 
   return (
     <>
-      {(menuOpen || showCart || mobileNavOpen) && (
-        <div className="screen-overlay" />
-      )}
+      {(menuOpen || showCart || mobileNavOpen) && <div className="screen-overlay" />}
 
       <header className="main-header-solafer">
         <div className="header-container">
 
-          {/* BOTÓN HAMBURGUESA IZQUIERDA */}
+          {/* HAMBURGUESA IZQUIERDA */}
           <button
             ref={mobileNavButtonRef}
             className="mobile-nav-toggle"
@@ -108,11 +103,7 @@ function Header() {
 
           {/* LOGO */}
           <Link to="/" className="nav-logo">
-            <img
-                src={logo}
-                alt="Comercial Solafer"
-                className="logo-img"
-            />
+            <img src={logo} alt="Comercial Solafer" className="logo-img" />
             <span className="logo-text">Comercial Solafer</span>
           </Link>
 
@@ -123,7 +114,7 @@ function Header() {
             <Link to="/nosotros" className="nav-link"><FaInfoCircle /> Nosotros</Link>
           </nav>
 
-          {/* BUSCADOR */}
+          {/* BUSCADOR DESKTOP */}
           <form
             className="search-box-modern"
             onSubmit={(e) => {
@@ -146,7 +137,16 @@ function Header() {
           {/* ACCIONES DERECHA */}
           <div className="header-actions">
 
-            <div className="cart-wrapper" style={{ position: "relative" }}>
+            {/* LUPA SOLO MOBILE */}
+            <button
+              className="action-btn mobile-search-btn"
+              onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+            >
+              <FaSearch />
+            </button>
+
+            {/* CARRITO */}
+            <div className="cart-wrapper">
               <button
                 ref={cartButtonRef}
                 className="action-btn"
@@ -168,8 +168,9 @@ function Header() {
               )}
             </div>
 
+            {/* CUENTA */}
             <Link to="/cuenta" className="action-btn account-btn">
-                <FaUser />
+              <FaUser />
             </Link>
 
             {/* MENÚ CATEGORÍAS */}
@@ -183,23 +184,47 @@ function Header() {
             >
               <FaEllipsisV />
             </button>
+
           </div>
         </div>
       </header>
 
-      {/* MENÚ MÓVIL GENERAL */}
-      {mobileNavOpen && (
-        <div className="mobile-nav-menu" ref={mobileNavRef}>
-          <Link to="/" onClick={() => setMobileNavOpen(false)}>Inicio</Link>
-          <Link to="/catalogo" onClick={() => setMobileNavOpen(false)}>Catálogo</Link>
-          <Link to="/nosotros" onClick={() => setMobileNavOpen(false)}>Nosotros</Link>
-          <Link to="/cuenta" onClick={() => setMobileNavOpen(false)}>Cuenta</Link>
+      {/* BUSCADOR MOBILE */}
+      {mobileSearchOpen && (
+        <div className="mobile-search-bar">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (search.trim()) {
+                navigate(`/catalogo?search=${search}`);
+                setMobileSearchOpen(false);
+                setSearch("");
+              }
+            }}
+          >
+            <input
+              type="text"
+              placeholder="¿Qué buscas?"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </form>
         </div>
       )}
 
-      {/* MEGA MENU */}
+      {/* NAV IZQUIERDA */}
+      {mobileNavOpen && (
+        <div className="mobile-nav-menu" ref={mobileNavRef}>
+          <Link to="/" onClick={() => setMobileNavOpen(false)}><FaHome /> Inicio</Link>
+          <Link to="/catalogo" onClick={() => setMobileNavOpen(false)}><FaThLarge /> Catálogo</Link>
+          <Link to="/nosotros" onClick={() => setMobileNavOpen(false)}><FaInfoCircle /> Nosotros</Link>
+          <Link to="/cuenta" onClick={() => setMobileNavOpen(false)}><FaUser /> Cuenta</Link>
+        </div>
+      )}
+
+      {/* 🔥 MEGA MENÚ PROTEGIDO */}
       {menuOpen && (
-        <div className="mega-menu">
+        <div className="mega-menu" ref={megaMenuRef}>
           {categories.map(category => {
             const isOpen = openCategoryId === category.id;
             const hasSubs = category.subcategories?.length > 0;

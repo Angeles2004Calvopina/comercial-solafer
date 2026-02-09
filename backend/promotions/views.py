@@ -1,3 +1,9 @@
-from django.shortcuts import render
+#backend/promotions/views.py
 
-# Create your views here.
+from rest_framework.generics import ListAPIView
+from .models import Promotion
+from .serializers import PromotionSerializer
+
+class ActivePromotionListView(ListAPIView):
+    queryset = Promotion.objects.filter(active=True)
+    serializer_class = PromotionSerializer

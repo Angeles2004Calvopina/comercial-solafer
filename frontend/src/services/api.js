@@ -1,7 +1,9 @@
+//frontend/src/services/api.js
+
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://comercial-solafer.onrender.com/api/",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 export default api;

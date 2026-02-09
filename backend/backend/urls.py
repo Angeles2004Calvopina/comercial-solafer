@@ -1,3 +1,5 @@
+# backend/backend/urls.py
+
 """
 URL configuration for backend project.
 
@@ -17,8 +19,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), # Corregido de .id a .urls
     path('api/products/', include('products.urls')),
+    path('api/promotions/', include('promotions.urls')),
+    path('api/orders/', include('orders.urls')),
+    path('api/auth/', include('accounts.urls')), # Añadimos esto para manejar cuentas
+    
+    # Rutas de Login JWT
+    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

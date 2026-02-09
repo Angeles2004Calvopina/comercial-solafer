@@ -1,6 +1,7 @@
+// frontend/src/pages/Home.jsx
+
 import { useEffect, useState } from "react";
-/*import { useNavigate, Link } from "react-router-dom";*/
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import "../styles/Home.css";
 import { FaArrowRight, FaTruck, FaShieldAlt, FaStar } from "react-icons/fa";
@@ -16,8 +17,7 @@ import interiores from "../assets/images/interiores.png";
 import Promotions from "../components/Promotions";
 
 function Home() {
-  //const [categories, setCategories] = useState([]); // pendiente activación backend
-  const [categories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -31,15 +31,14 @@ function Home() {
   };
 
   useEffect(() => {
-    // Cargar Categorías
-    /*api.get("products/categories/")
-      .then(res => setCategories(res.data))
-      .catch(err => console.error("Error cargando categorías:", err));*/
-
-    // Cargar algunos productos para "Destacados"
-    api.get("products/")
-      .then(res => setFeaturedProducts(res.data.slice(0, 4))) // Tomamos los primeros 4
-      .catch(err => console.error("Error cargando destacados:", err));
+    api.get("products/categories/")
+      .then(res => {
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data.results || [];
+        setCategories(data);
+      })
+      .catch(err => console.error("Error cargando categorías:", err));
   }, []);
 
   return (
@@ -90,7 +89,7 @@ function Home() {
               key={category.id}
               className="cat-card-new"
               style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url(${categoryImages[category.slug]})` }}
-              onClick={() => navigate(`/catalogo/${category.slug}`)}
+              onClick={() => navigate(`/${category.slug}`)}
             >
               <h3>{category.name}</h3>
               <span className="cat-link">Ver productos</span>

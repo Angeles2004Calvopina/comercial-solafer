@@ -1,3 +1,5 @@
+// frontend/src/components/Promotions.jsx
+
 function Promotions() {
   return (
     <div style={{ textAlign: "center", padding: "40px 0", color: "#777" }}>

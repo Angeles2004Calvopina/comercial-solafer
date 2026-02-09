@@ -1,5 +1,7 @@
+//frontend/src/pages/Catalog.jsx
+
 import { useEffect, useState, useContext } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import { CartContext } from "../context/CartContext";
 
@@ -7,7 +9,6 @@ import "../styles/Catalog.css";
 
 function Catalog() {
   const { slug } = useParams(); 
-  const location = useLocation();
   const { addToCart } = useContext(CartContext);
 
   const [products, setProducts] = useState([]);
@@ -17,27 +18,44 @@ function Catalog() {
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const [showToast, setShowToast] = useState(false);
 
-  // 🔹 PAGINACIÓN (NUEVO)
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
 
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-
-  // 🔹 FUNCIÓN DE CARGA PAGINADA (NUEVO)
-  const loadProducts = (page = 1) => {
-    api.get(`products/?page=${page}`).then(res => {
-      setProducts(res.data.results);
-      setTotalPages(Math.ceil(res.data.count / 24));
-      setCurrentPage(page);
-    });
-  };
+  const pageFromUrl = Number(searchParams.get("page")) || 1;
 
   useEffect(() => {
-    api.get("products/categories/").then(res => setCategories(res.data));
-    api.get("promotions/active/").then(res => setPromotions(res.data));
-    loadProducts(1); // 🔹 antes era products/
+    setPage(pageFromUrl);
+  }, [pageFromUrl]);
+
+  useEffect(() => {
+    api.get("products/categories/").then(res => {
+      const data = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data.results)
+          ? res.data.results
+          : [];
+      setCategories(data);
+    });
+
+    api.get("promotions/active/").then(res => {
+      setPromotions(res.data.results ?? res.data);
+    }); 
   }, []);
+
+  useEffect(() => {
+    const params = {};
+
+    if (searchQuery) params.search = searchQuery;
+    if (slug) params.category_slug = slug;
+
+    api.get("products/", { params }).then(res => {
+      const data = res.data.results ?? res.data ?? [];
+      setProducts(data);
+      setCount(data.length); 
+    });
+  }, [searchQuery, slug]);
 
   useEffect(() => {
     if (categories.length > 0) {
@@ -71,24 +89,47 @@ function Catalog() {
     }
   }, [slug, categories]); 
 
+  const isMainCatalog = !slug && !searchQuery;
+
   const filteredProducts = products.filter(p => {
     if (searchQuery) {
-      return p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-             p.category.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return (
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.subcategory?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.subcategory?.category?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
+
     if (activeSubcategory) {
-      return p.category.id === activeSubcategory.id;
+      return p.subcategory?.id === activeSubcategory.id;
     }
+
     if (currentCategory) {
-      const subIds = currentCategory.subcategories?.map(s => s.id) || [];
-      return p.category.id === currentCategory.id || subIds.includes(p.category.id);
+      // Categoría con subcategorías
+      if (currentCategory.subcategories?.length > 0) {
+        return p.subcategory?.category?.id === currentCategory.id;
+      }
+
+      // Categoría SIN subcategorías
+      return p.category?.id === currentCategory.id
+        || p.subcategory?.category?.id === currentCategory.id;
     }
-    return true; 
+
+    return true;
   });
+
+  const ITEMS_PER_PAGE = 20;
+
+  const displayedProducts = isMainCatalog
+    ? filteredProducts.slice(
+        (page - 1) * ITEMS_PER_PAGE,
+        page * ITEMS_PER_PAGE
+      )
+    : filteredProducts;
 
   const getPromoData = (product) => {
     const promo = promotions.find(p =>
-      p.products.some(pp => pp.id === product.id)
+      p.products.includes(product.id)
     );
     if (!promo) return null;
     const basePrice = Number(product.price);
@@ -101,6 +142,10 @@ function Catalog() {
     };
   };
 
+  const handleSearch = (query) => {
+    setSearchParams({ search: query, page: 1 });
+  };
+
   return (
     <div className="catalog-container">
       <div className="catalog-header">
@@ -111,44 +156,54 @@ function Catalog() {
         </h1>
       </div>
 
+      {/* CATEGORÍAS PRINCIPALES */}
       {!slug && !searchQuery && (
         <div className="category-filter-bar">
           <button 
             className={`filter-pill ${!currentCategory ? 'active' : ''}`}
-            onClick={() => { setCurrentCategory(null); setActiveSubcategory(null); }}
+            onClick={() => {
+              setCurrentCategory(null);
+              setActiveSubcategory(null);
+              setSearchParams({ page: 1 });
+            }}
           > Todos </button>
           {categories.map(cat => (
             <button
               key={cat.id}
               className={`filter-pill ${currentCategory?.id === cat.id ? 'active' : ''}`}
-              onClick={() => { setCurrentCategory(cat); setActiveSubcategory(null); }}
+              onClick={() => {setCurrentCategory(cat); setActiveSubcategory(null); setSearchParams({ page: 1 });}}
             > {cat.name} </button>
           ))}
         </div>
       )}
 
+      {/* SUBCATEGORÍAS */}
       {!searchQuery && currentCategory?.subcategories?.length > 0 && (
         <div className="subcategory-nav">
           <span className="subcategory-label">Filtrar en {currentCategory.name}:</span>
           <button 
             className={`sub-pill ${!activeSubcategory ? 'active' : ''}`}
-            onClick={() => setActiveSubcategory(null)}
+            onClick={() => {
+              setActiveSubcategory(null);
+              setSearchParams({ page: 1 });
+            }}
           > Ver Todo </button>
           {currentCategory.subcategories.map(sub => (
             <button
               key={sub.id}
               className={`sub-pill ${activeSubcategory?.id === sub.id ? 'active' : ''}`}
-              onClick={() => setActiveSubcategory(sub)}
+              onClick={() => {setActiveSubcategory(sub); setSearchParams({ page: 1 });}}
             > {sub.name} </button>
           ))}
         </div>
       )}
 
+      {/* GRID DE PRODUCTOS */}
       <div className="products-grid-formal">
         {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => {
+          displayedProducts.map(product => {
             const promo = getPromoData(product);
-            const isOutOfStock = product.stock <= 0;
+            const isOutOfStock = product.stock <= 0; // Detectamos si no hay stock
 
             return (
               <div 
@@ -171,7 +226,9 @@ function Catalog() {
                 </div>
 
                 <div className="product-details">
-                  <span className="product-category-tag">{product.category.name}</span>
+                  <span className="product-category-tag">
+                    {product.subcategory?.category?.name}
+                  </span>
                   <h4 className={`product-name-formal ${isOutOfStock ? 'text-strikethrough' : ''}`}>
                     {product.name}
                   </h4>
@@ -215,15 +272,34 @@ function Catalog() {
         )}
       </div>
 
-      {/* 🔹 PAGINACIÓN VISUAL (NUEVO, NO AFECTA NADA) */}
-      {totalPages > 1 && (
+      {isMainCatalog && count > ITEMS_PER_PAGE && (
         <div className="pagination-bar">
-          <button disabled={currentPage === 1} onClick={() => loadProducts(currentPage - 1)}>
-            ◀
+          <button
+            disabled={page === 1}
+            onClick={() =>
+              setSearchParams({
+                ...(searchQuery && { search: searchQuery }),
+                page: page - 1,
+              })
+            }
+          >
+            ⬅ Anterior
           </button>
-          <span>{currentPage} / {totalPages}</span>
-          <button disabled={currentPage === totalPages} onClick={() => loadProducts(currentPage + 1)}>
-            ▶
+
+          <span>
+            Página {page} de {Math.ceil(count / ITEMS_PER_PAGE)}
+          </span>
+
+          <button
+            disabled={page >= Math.ceil(count / ITEMS_PER_PAGE)}
+            onClick={() =>
+              setSearchParams({
+                ...(searchQuery && { search: searchQuery }),
+                page: page + 1,
+              })
+            }
+          >
+            Siguiente ➡
           </button>
         </div>
       )}

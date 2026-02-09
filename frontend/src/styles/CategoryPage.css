@@ -1,0 +1,174 @@
+/* =========================
+   CATEGORY PAGE
+========================= */
+
+.catalog-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fdfbfb;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.catalog-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: -0.5px;
+  text-transform: capitalize;
+}
+
+/* BOTÓN REGRESAR */
+.btn-outline {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* =========================
+   GRID DE PRODUCTOS
+========================= */
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 28px;
+}
+
+/* =========================
+   CARD PRODUCTO
+========================= */
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   IMAGEN
+========================= */
+
+.product-image-box {
+  aspect-ratio: 1 / 1;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.product-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  font-size: 3rem;
+  opacity: 0.35;
+}
+
+/* =========================
+   INFO PRODUCTO
+========================= */
+
+.product-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 14px;
+  line-height: 1.35;
+  min-height: 2.7rem;
+}
+
+/* =========================
+   PRECIO
+========================= */
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ff6b6b;
+  margin-bottom: 16px;
+}
+
+/* =========================
+   BOTÓN
+========================= */
+
+.add-cart-btn {
+  margin-top: auto;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+
+.add-cart-btn:hover {
+  background: #ff6b6b;
+  transform: scale(1.02);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .catalog-wrapper {
+    padding: 30px 15px;
+  }
+
+  .catalog-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .catalog-grid {
+    gap: 18px;
+  }
+}
