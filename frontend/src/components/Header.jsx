@@ -23,7 +23,7 @@ function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
-  const { cartCount } = useContext(CartContext);
+  const { cart, cartCount, total } = useContext(CartContext); 
   const navigate = useNavigate();
 
   const cartRef = useRef(null);

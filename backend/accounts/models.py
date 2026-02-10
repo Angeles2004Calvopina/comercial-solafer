@@ -1,26 +1,12 @@
-# backend/accounts/models.py
-
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    cedula_ruc = models.CharField(max_length=13, blank=True, null=True)
-    telefono = models.CharField(max_length=15, blank=True, null=True)
-    direccion = models.TextField(blank=True, null=True)
-    referencia = models.TextField(blank=True, null=True)
+class Order(models.Model):
+    # ESTA LÍNEA ES LA QUE PERMITE INVITADOS. DEBE TENER null=True y blank=True
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20, default='Pagado')
 
     def __str__(self):
-        return f"Perfil de {self.user.email}"
-
-# Esto crea un perfil automáticamente cuando se crea un usuario
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+        return f"Pedido {self.id} - {self.user.username if self.user else 'Invitado'}"

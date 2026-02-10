@@ -1,227 +1,282 @@
-/* ===============================
-   CHECKOUT GENERAL
-================================ */
-.checkout-page {
-  background: #f8f9fa; /* Un gris más suave */
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+/* ======================================================
+   CONFIGURACIÓN GLOBAL Y CONTENEDOR
+   ====================================================== */
+
+:root {
+  --primary-coral: #fe4c50;
+  --primary-dark: #e11d48;
+  --bg-light: #f8fafc;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --white: #ffffff;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
 }
 
-/* ===============================
-   TARJETAS (PROFUNDIDAD)
-================================ */
-.checkout-card,
+.checkout-page {
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  padding: 40px 20px; 
+  display: flex;
+  align-items: center;
+}
+
+/* Evitar que el contenido pegue a los bordes en pantallas grandes */
+.checkout-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ======================================================
+   TARJETAS (CARDS) ESTILO MODERNO
+   ====================================================== */
+
+.checkout-card, 
 .summary-sticky-card {
-  background: #ffffff;
-  border-radius: 20px;
-  border: 1px solid rgba(0,0,0,0.03);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  background: var(--white);
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem; 
+  height: 100%;
   transition: transform 0.3s ease;
 }
 
-.summary-sticky-card {
-  position: sticky;
-  top: 100px;
-  border: 2px solid #fff; /* Efecto borde elegante */
+@media (min-width: 992px) {
+  .summary-sticky-card {
+    position: sticky;
+    top: 40px;
+  }
 }
 
-/* ===============================
-   INPUTS MODERNOS
-================================ */
+/* ======================================================
+   INPUTS Y FORMULARIOS
+   ====================================================== */
+
 .custom-input {
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  padding: 14px 16px;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  background-color: #fcfcfd !important;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
-  background-color: #fcfcfc;
+  transition: all 0.2s ease !important;
 }
 
 .custom-input:focus {
-  background-color: #fff;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 4px rgba(255,107,107,0.1);
+  border-color: var(--primary-coral) !important;
+  background-color: var(--white) !important;
+  box-shadow: 0 0 0 4px rgba(254, 76, 80, 0.1) !important;
   outline: none;
 }
 
 .input-group-text {
   border-radius: 12px 0 0 12px !important;
-  border: 1px solid #e2e8f0;
-  color: #ff6b6b;
+  border: 1.5px solid #e2e8f0 !important;
+  color: var(--text-muted);
 }
 
-/* ===============================
+.text-coral {
+  color: var(--primary-coral) !important;
+}
+
+/* ======================================================
    BOTONES
-================================ */
+   ====================================================== */
+
 .btn-back-shopping {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  padding: 10px 20px;
-  border-radius: 50px;
+  background: transparent;
+  border: 1.5px solid #e2e8f0;
+  color: var(--text-main);
   font-weight: 600;
-  color: #64748b;
-  transition: all 0.3s;
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
 }
 
 .btn-back-shopping:hover {
   background: #f1f5f9;
-  color: #1e293b;
-  transform: translateX(-5px);
+  border-color: #cbd5e1;
 }
 
 .btn-whatsapp-minimal {
   background: #25d366;
-  color: #fff;
+  color: white;
   border: none;
+  font-weight: 600;
   padding: 10px 20px;
   border-radius: 50px;
-  font-size: 14px;
-  font-weight: 700;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-whatsapp-minimal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+  background: #1ebe5d;
+  transform: scale(1.05);
+  color: white;
 }
 
 .btn-confirm-final {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary-coral), var(--primary-dark));
+  color: white !important;
   border: none;
-  border-radius: 16px;
-  font-weight: 800;
+  padding: 18px !important;
+  border-radius: 16px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2);
+  transition: all 0.3s ease !important;
 }
 
 .btn-confirm-final:hover:not(:disabled) {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+  box-shadow: 0 15px 30px rgba(225, 29, 72, 0.3);
+  filter: brightness(1.1);
 }
 
 .btn-confirm-final:disabled {
   background: #cbd5e1;
+  box-shadow: none;
   cursor: not-allowed;
 }
 
-/* ===============================
-   DETALLES DE TEXTO
-================================ */
-.text-coral {
-  color: #ff6b6b;
-}
-
-.total-display {
-  background: #fff5f5;
-  border-radius: 15px;
-  padding: 20px;
-}
-
-.total-display h2 {
-  font-size: 2.5rem;
-  color: #2d3436;
-  margin: 0;
-}
-
-.form-check {
-  transition: all 0.2s;
-  border: 1px solid #f1f5f9 !important;
-}
-
-.form-check:hover {
-  background: #fff5f5 !important;
-  border-color: #ff6b6b !important;
-}
-
-/* Animación de entrada */
-.animate__fadeIn {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===============================
-   ESTILOS DE PAGO (PAYMENT.JSX)
-================================ */
-
-.payment-methods-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
+/* ======================================================
+   MÉTODOS DE PAGO (COMPONENT)
+   ====================================================== */
 
 .method-btn {
-  display: flex;
+  background: var(--white);
+  border: 2px solid #f1f5f9 !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  margin-bottom: 12px;
+  transition: all 0.2s ease !important;
+  display: flex !important;
   align-items: center;
-  padding: 15px;
-  border: 2px solid #f1f5f9;
-  border-radius: 12px;
-  background: white;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  text-align: left;
+  gap: 15px;
 }
 
 .method-btn:hover {
-  border-color: #ff6b6b;
-  background: #fff5f5;
+  border-color: var(--primary-coral) !important;
+  background: #fffafa !important;
+  transform: translateX(5px);
 }
 
 .method-btn .icon {
   font-size: 24px;
-  margin-right: 15px;
-  color: #ff6b6b;
 }
 
-.method-btn span {
-  font-weight: 600;
-  color: #475569;
+.method-detail {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 25px;
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
-/* Diseño del QR simulado */
-.qr-simulated {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  border: 2px dashed #cbd5e1;
-  display: inline-block;
+.bank-info-card {
+  border: 1px solid rgba(254, 76, 80, 0.2) !important;
+  background: #fff !important;
+  line-height: 1.6;
 }
 
-.qr-header {
-  font-weight: bold;
-  color: #003566;
-  margin-bottom: 10px;
-  font-size: 12px;
+/* ======================================================
+   UTILIDADES Y RESPONSIVE
+   ====================================================== */
+
+.total-display h2 {
+  font-size: 3rem;
+  color: var(--primary-dark);
+  margin-top: 5px;
 }
 
-/* Alertas de estado */
-.payment-alert {
-  padding: 15px;
-  border-radius: 12px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.form-check {
+  transition: all 0.2s;
+  border: 1.5px solid #f1f5f9 !important;
 }
 
-.payment-alert.success {
-  background-color: #d1fae5;
-  color: #065f46;
+.form-check:hover {
+  border-color: var(--primary-coral) !important;
 }
 
-.payment-alert.error {
-  background-color: #fee2e2;
-  color: #991b1b;
+@media (max-width: 768px) {
+  .checkout-page {
+    padding: 20px 10px;
+  }
+  
+  .checkout-card, 
+  .summary-sticky-card {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .total-display h2 {
+    font-size: 2.2rem;
+  }
+
+  .btn-confirm-final {
+    padding: 15px !important;
+  }
 }
 
-.btn-back-link {
-  background: none;
-  border: none;
-  color: #94a3b8;
-  font-size: 13px;
-  text-decoration: underline;
+.animate__fadeIn {
+  animation-duration: 0.8s;
+}
+
+.checkout-card .row.g-3 > [class*="col-"] {
+    margin-bottom: 12px; 
+}
+
+.custom-input {
+    height: 45px; 
+    border-radius: 8px !important;
+    border: 1px solid #ddd !important;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #ff7f50 !important; 
+    box-shadow: 0 0 0 0.2rem rgba(255, 127, 80, 0.1) !important;
+}
+
+textarea.custom-input {
+    height: auto !important;
+}
+
+.payment-section .btn-link.text-muted {
+    text-decoration: none !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888 !important;
+    background-color: #eee; 
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    width: auto !important;
+    margin: 15px auto 0 auto;
+    transition: all 0.3s ease;
+}
+
+.payment-section .btn-link.text-muted:hover {
+    background-color: #e0e0e0;
+    color: #333 !important;
+    transform: translateY(-1px);
+}
+
+
+.btn-confirm-final {
+    background: #ff7f50; 
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+}
+
+.btn-confirm-final:hover {
+    background: #e66a40;
 }

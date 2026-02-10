@@ -131,7 +131,7 @@ function Nosotros() {
                 </div>
               </div>
               
-              <a href="https://wa.me/tu-numero" className="btn-contact-info">
+              <a className="btn-contact-info">
                 Contactar por WhatsApp
               </a>
             </div>
@@ -144,7 +144,6 @@ function Nosotros() {
         <div className="container">
             <h3>¿Listo para equiparte con lo mejor?</h3>
             <p>Explora nuestro catálogo de productos y descubre nuestras ofertas.</p>
-            <button className="btn-primary-solafer">Ver Productos <FaShoppingBag style={{marginLeft: '8px'}}/></button>
         </div>
       </section>
     </div>
