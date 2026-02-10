@@ -6,8 +6,7 @@ import {
   FaShieldAlt,
   FaStar,
   FaEye,
-  FaUsers,
-  FaShoppingBag
+  FaUsers
 } from "react-icons/fa";
 import "../styles/Nosotros.css";
 
@@ -130,10 +129,6 @@ function Nosotros() {
                   </div>
                 </div>
               </div>
-              
-              <a className="btn-contact-info">
-                Contactar por WhatsApp
-              </a>
             </div>
           </div>
         </div>

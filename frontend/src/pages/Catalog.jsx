@@ -17,10 +17,8 @@ function Catalog() {
   const [showToast, setShowToast] = useState(false);
 
   const [loadingProducts, setLoadingProducts] = useState(false);
-  const [loadingCategories, setLoadingCategories] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
@@ -35,16 +33,13 @@ function Catalog() {
   ========================= */
 
   useEffect(() => {
-    setLoadingCategories(true);
-
     api.get("products/categories/")
       .then(res => {
         const data = Array.isArray(res.data)
           ? res.data
           : res.data.results || [];
         setCategories(data);
-      })
-      .finally(() => setLoadingCategories(false));
+      });
 
     api.get("promotions/active/")
       .then(res => {
@@ -64,10 +59,9 @@ function Catalog() {
     setLoadingProducts(true);
 
     api.get("products/", { params })
-      .then(res => {
-        const data = res.data.results ?? res.data ?? [];
-        setProducts(data);
-        setCount(data.length);
+    .then(res => {
+      const data = res.data.results ?? res.data ?? [];
+      setProducts(data);
       })
       .finally(() => setLoadingProducts(false));
   }, [searchQuery, slug]);
