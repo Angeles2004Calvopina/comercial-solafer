@@ -1,46 +1,195 @@
-.cart-page-layout {
+/* ===============================
+   FONDO GENERAL DE LA PÁGINA
+================================ */
+.cart-page-bg {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  padding: 0 1rem; 
+}
+
+/* ===============================
+   CONTENEDOR CENTRAL
+================================ */
+.cart-container {
+  max-width: 1200px;
+  margin: 0 auto; 
+}
+
+/* ===============================
+   TÍTULO PRINCIPAL
+================================ */
+.cart-main-title {
+  font-weight: 800;
+  color: #1e293b;
+}
+
+/* ===============================
+   GRID PRINCIPAL
+================================ */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2.5rem; 
+  align-items: start;
+}
+
+/* ===============================
+   CONTENEDOR IZQUIERDO (CARRITO)
+================================ */
+.cart-items-wrapper {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  padding: 2rem; 
+}
+
+/* ===============================
+   FOOTER DEL CARRITO
+================================ */
+.cart-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ===============================
+   BOTÓN VOLVER A CATÁLOGO
+================================ */
+.btn-back-catalogo {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-weight: 600;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }
 
-.cart-items-section {
+.btn-back-catalogo:hover {
+  color: #2c3e50;
+}
+
+/* ===============================
+   TARJETA RESUMEN
+================================ */
+.summary-card {
   background: white;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.cart-summary-box {
-  background: #ffffff;
-  min-width: 350px;
-  border: 1px solid #f1f5f9;
+  border-radius: 18px;
+  padding: 2rem; /* aire interno */
+  border: 1px solid #e5e7eb;
   position: sticky;
-  top: 100px;
+  top: 90px;
 }
 
-.summary-line span {
+/* ===============================
+   RESUMEN LISTA
+================================ */
+.summary-title {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #334155;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
   color: #64748b;
 }
 
-.total-line span {
-  color: #1e293b !important;
+/* ===============================
+   ENVÍO DESTACADO
+================================ */
+.delivery-tag {
+  background: #f0fdf4;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
 }
 
-.text-coral {
-  color: #ff6b6b;
+/* ===============================
+   DIVISOR TOTAL
+================================ */
+.total-divider {
+  height: 1px;
+  border-top: 2px dashed #e2e8f0;
+  margin: 1.8rem 0;
 }
 
-/* Reutilizamos el estilo de btn-main que ya definimos antes */
-.btn-main {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+/* ===============================
+   TOTAL
+================================ */
+.total-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-weight: 600;
+  color: #475569;
+}
+
+.total-amount {
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: #0f172a;
+}
+
+/* ===============================
+   BOTÓN CHECKOUT
+================================ */
+.btn-checkout-final {
+  background: #2c3e50;
   color: white;
   border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s ease;
 }
 
-.btn-main:hover {
+.btn-checkout-final:hover {
+  background: #1e293b;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* ===============================
+   SEGURIDAD
+================================ */
+.security-info {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 991px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-items-wrapper,
+  .summary-card {
+    padding: 1.5rem;
+  }
+
+  .summary-card {
+    position: static;
+    margin-top: 2rem;
+  }
 }

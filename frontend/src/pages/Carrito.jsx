@@ -1,71 +1,101 @@
-// frontend/src/pages/Carrito.jsx
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import Cart from "../components/Cart";
 import "../styles/Carrito.css";
+import { ArrowLeft, CreditCard, ShieldCheck } from "lucide-react";
 
 function Carrito() {
   const navigate = useNavigate();
   const { total, cart } = useContext(CartContext);
 
-  return (
-    <div className="page-cart container py-5"> 
-      <h3 className="fw-bold mb-4">🛒 Revisión de tu pedido</h3>
-      
-      {cart.length === 0 ? (
-        <div className="text-center py-5 shadow-sm rounded-4 bg-white">
-          <h4 className="text-muted">No tienes productos aún</h4>
-          <button className="btn btn-primary mt-3 px-4" onClick={() => navigate("/catalogo")}>
-            Ir al Catálogo
-          </button>
-        </div>
-      ) : (
-        <div className="row g-4">
-          {/* LADO IZQUIERDO: Lista de productos */}
-          <div className="col-lg-8">
-            <div className="card border-0 shadow-sm p-4 rounded-4">
-              <Cart variant="page" />
-              <button 
-                className="btn btn-link text-decoration-none mt-4 p-0 text-start" 
-                onClick={() => navigate("/catalogo")}
-              >
-                ← Seguir agregando productos
-              </button>
-            </div>
-          </div>
+  const subtotal = total / 1.15;
+  const iva = total - subtotal;
 
-          {/* LADO DERECHO: Resumen de cobro */}
-          <aside className="col-lg-4">
-            <div className="card border-0 shadow-sm p-4 rounded-4 sticky-top" style={{ top: '20px' }}>
-              <h5 className="fw-bold mb-4">Resumen de Compra</h5>
-              <div className="d-flex justify-content-between mb-2">
-                <span className="text-muted">Subtotal</span>
-                <span>${(total / 1.15).toFixed(2)}</span>
+  return (
+    <div className="cart-page-bg">
+      <div className="container cart-container py-5">
+        <h2 className="cart-main-title mb-4">🛒 Mi Carrito</h2>
+
+        {cart.length === 0 ? (
+          <div className="empty-cart-card shadow-sm text-center py-5">
+            <h3 className="fw-bold">Tu carrito está vacío</h3>
+            <button
+              className="btn btn-primary mt-3"
+              onClick={() => navigate("/catalogo")}
+            >
+              Explorar Productos
+            </button>
+          </div>
+        ) : (
+          <div className="cart-layout">
+
+            {/* IZQUIERDA */}
+            <div className="cart-left">
+              <div className="cart-items-wrapper shadow-sm">
+                <Cart variant="page" />
+
+                <div className="cart-footer">
+                  <button
+                    className="btn-back-catalogo"
+                    onClick={() => navigate("/")}
+                  >
+                    <ArrowLeft size={18} />
+                    Regresar al Inicio
+                  </button>
+                </div>
               </div>
-              <div className="d-flex justify-content-between mb-3">
-                <span className="text-muted">IVA (15%)</span>
-                <span>${(total - (total / 1.15)).toFixed(2)}</span>
-              </div>
-              <hr />
-              <div className="d-flex justify-content-between mb-4">
-                <span className="fw-bold fs-5">Total</span>
-                <span className="fw-bold fs-4 text-primary">${total.toFixed(2)}</span>
-              </div>
-              
-              <button 
-                className="btn btn-primary btn-lg w-100 py-3 fw-bold shadow" 
-                onClick={() => navigate("/checkout")}
-              >
-                Ir a los datos de envío →
-              </button>
-              <p className="text-center text-muted small mt-3">
-                🔒 Compra segura y protegida
-              </p>
             </div>
-          </aside>
-        </div>
-      )}
+
+            {/* DERECHA */}
+            <aside className="cart-right">
+              <div className="summary-card shadow-sm">
+                <h5 className="summary-title">Resumen de Compra</h5>
+
+                <div className="summary-list">
+                  <div className="summary-item">
+                    <span>Subtotal</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
+
+                  <div className="summary-item">
+                    <span>IVA (15%)</span>
+                    <span>${iva.toFixed(2)}</span>
+                  </div>
+
+                  <div className="summary-item delivery-tag">
+                    <span>Envío</span>
+                    <span className="text-success fw-bold">Gratis</span>
+                  </div>
+                </div>
+
+                <div className="total-divider"></div>
+
+                <div className="total-section">
+                  <span className="total-label">Total a pagar</span>
+                  <span className="total-amount">
+                    ${total.toFixed(2)}
+                  </span>
+                </div>
+
+                <button
+                  className="btn-checkout-final w-100 mt-4"
+                  onClick={() => navigate("/checkout")}
+                >
+                  <CreditCard size={20} />
+                  Proceder al Pago
+                </button>
+
+                <div className="security-info">
+                  <ShieldCheck size={14} className="text-success" />
+                  <span>Pago 100% seguro y encriptado</span>
+                </div>
+              </div>
+            </aside>
+
+          </div>
+        )}
+      </div>
     </div>
   );
 }

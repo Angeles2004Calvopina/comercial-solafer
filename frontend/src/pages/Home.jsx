@@ -72,8 +72,8 @@ function Home() {
 
       {/* BARRA DE CONFIANZA */}
       <div className="trust-bar">
-        <div className="trust-item"><FaTruck /> <span>Entrega rápida</span></div>
-        <div className="trust-item"><FaShieldAlt /> <span>Compra 100% Segura</span></div>
+        <div className="trust-item"><FaTruck /> <span>Entrega segura</span></div>
+        <div className="trust-item"><FaShieldAlt /> <span>Calidad garantizada</span></div>
         <div className="trust-item"><FaStar /> <span>Los mejores precios</span></div>
       </div>
 
