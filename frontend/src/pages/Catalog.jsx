@@ -17,10 +17,8 @@ function Catalog() {
   const [showToast, setShowToast] = useState(false);
 
   const [loadingProducts, setLoadingProducts] = useState(false);
-  const [loadingCategories, setLoadingCategories] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
